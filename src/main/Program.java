@@ -147,8 +147,8 @@ public class Program {
     			  	  
     			  String source = absPath.substring(0, absPath.lastIndexOf("/")) +"/"+ curDateForm + ".csv";
     			  File copyFrom = new File(source);
-    			  destPath = destPath + curDateForm + ".csv";
-    			  File copyTo = new File(destPath);
+    			  String destPathCSV = destPath + curDateForm + ".csv";
+    			  File copyTo = new File(destPathCSV);
     			  try {
 					Files.copy(copyFrom.toPath(),copyTo.toPath(), StandardCopyOption.REPLACE_EXISTING);
 				  } catch (IOException e) {
@@ -162,30 +162,30 @@ public class Program {
     	  }
     	  
     	//umbennen und verschieben von XML Dateien (Smell Location)
-    	  for ( File f : filesFindXML ){
-    		  String fileName = f.getName();
-    		  if(fileName.contains(smellModeFile)){
-    			   
-    			  String absPath = f.getAbsolutePath();
-    			  
-    			  f.renameTo(new File(absPath.substring(0, absPath.lastIndexOf("/")) +"/"+ curDateForm + ".xml"));
-    			  	  
-    			  String source = absPath.substring(0, absPath.lastIndexOf("/")) +"/"+ curDateForm + ".xml";
-    			  File copyFrom = new File(source);
-    			  destPath = destPath + curDateForm + ".xml";
-    			  File copyTo = new File(destPath);
-    			  try {
-					Files.copy(copyFrom.toPath(),copyTo.toPath(), StandardCopyOption.REPLACE_EXISTING);
-				  } catch (IOException e) {
-						// TODO Auto-generated catch block
-					e.printStackTrace();
-				  }
-					
-    		  }else{
-    			  f.delete();
-    		  }
+    	  if(smellModeStr.equals("LF")){
+	    	  for ( File f : filesFindXML ){
+	    		  String fileName = f.getName();
+	    		  if(fileName.contains(smellModeFile)){
+	    			   
+	    			  String absPath = f.getAbsolutePath();
+	    			  
+	    			  //f.renameTo(new File(absPath.substring(0, absPath.lastIndexOf("/")) +"/"+ curDateForm + ".xml"));
+	    			  	  
+	    			  String source = absPath;
+	    			  File copyFrom = new File(source);
+	    			  String destPathXML = destPath + curDateForm + ".xml";
+	    			  File copyTo = new File(destPathXML);
+	    			  try {
+						Files.copy(copyFrom.toPath(),copyTo.toPath(), StandardCopyOption.REPLACE_EXISTING);
+					  } catch (IOException e) {
+							// TODO Auto-generated catch block
+						e.printStackTrace();
+					  }
+						
+	    		  }
+	    	  }
     	  }
-	           
+    	  
 	     prevDate = curDate;
 	    }	
 	}
