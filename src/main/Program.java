@@ -133,12 +133,14 @@ public class Program {
 		  
 		  String pathFind = sourcePath;
     	  System.out.println( "Suche im Pfad: " + pathFind );
-    	  List<File> filesFind = FileFinder.find( pathFind, "(.*\\.csv$)" );
+    	  List<File> filesFindCSV = FileFinder.find( pathFind, "(.*\\.csv$)" );
+    	  List<File> filesFindXML = FileFinder.find(pathFind, "(.*\\.xml$)");
     	  
-    	  for ( File f : filesFind ){
+    	//umbennen und verschieben von CSV Dateien (Smell Severity)
+    	  for ( File f : filesFindCSV ){
     		  String fileName = f.getName();
     		  if(fileName.contains(smellModeFile)){
-    			  //umbennen und verschieben
+    			  
     			  String absPath = f.getAbsolutePath();
     			  
     			  f.renameTo(new File(absPath.substring(0, absPath.lastIndexOf("/")) +"/"+ curDateForm + ".csv"));
@@ -158,13 +160,34 @@ public class Program {
     			  f.delete();
     		  }
     	  }
-	      
-	      
+    	  
+    	//umbennen und verschieben von XML Dateien (Smell Location)
+    	  for ( File f : filesFindXML ){
+    		  String fileName = f.getName();
+    		  if(fileName.contains(smellModeFile)){
+    			   
+    			  String absPath = f.getAbsolutePath();
+    			  
+    			  f.renameTo(new File(absPath.substring(0, absPath.lastIndexOf("/")) +"/"+ curDateForm + ".xml"));
+    			  	  
+    			  String source = absPath.substring(0, absPath.lastIndexOf("/")) +"/"+ curDateForm + ".xml";
+    			  File copyFrom = new File(source);
+    			  destPath = destPath + curDateForm + ".xml";
+    			  File copyTo = new File(destPath);
+    			  try {
+					Files.copy(copyFrom.toPath(),copyTo.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				  } catch (IOException e) {
+						// TODO Auto-generated catch block
+					e.printStackTrace();
+				  }
+					
+    		  }else{
+    			  f.delete();
+    		  }
+    	  }
+	           
 	     prevDate = curDate;
-	    }
-		
-		
-		
+	    }	
 	}
 	
 	/**
