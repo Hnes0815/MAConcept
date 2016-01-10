@@ -72,7 +72,8 @@ public class Program {
 	    	  int filesCount = filesFind.size();
 	       	  
 	    	  // In CSV Datei schreiben
-	    	  File csvOut = new File(resultsPath + project + "/projectAnalyse.csv");
+	    	  File csvOut = new File(resultsPath + project + "/projectInfo.csv");
+	    	  File csvOutFiles = new File(resultsPath + project + "/projectAnalysis.csv");
 	          File makeDir = new File(resultsPath + project);
 	          makeDir.mkdirs();
 	    	  BufferedWriter buff;
@@ -87,6 +88,24 @@ public class Program {
 					e1.printStackTrace();
 				}
 	      
+			 for(File f : filesFind){
+				 String testFile = f.getAbsolutePath();
+		  		 int testIdx = testFile.lastIndexOf("/source/");
+		  		 String fileName = testFile.substring(testIdx + 8, testFile.length());
+				 
+				 BufferedWriter buffFile;
+					try {
+						buffFile = new BufferedWriter(new FileWriter( csvOutFiles, true ));
+						buffFile.write( fileName + "," + curDateForm);
+					    buffFile.newLine();
+					    buffFile.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			 }
+				
+				
 			  String curDir = tempPath+project+"/"+curDateForm;
 			  File dir = new File(curDir);
 			  dir.mkdirs();  
@@ -167,10 +186,8 @@ public class Program {
 	    		  String fileName = f.getName();
 	    		  if(fileName.contains(smellModeFile)){
 	    			   
-	    			  String absPath = f.getAbsolutePath();
-	    			  
-	    			  //f.renameTo(new File(absPath.substring(0, absPath.lastIndexOf("/")) +"/"+ curDateForm + ".xml"));
-	    			  	  
+	    			  String absPath = f.getAbsolutePath();  
+	    			 	  
 	    			  String source = absPath;
 	    			  File copyFrom = new File(source);
 	    			  String destPathXML = destPath + curDateForm + ".xml";
