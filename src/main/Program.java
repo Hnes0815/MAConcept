@@ -28,8 +28,8 @@ public class Program {
 	private static String cppstatsPath = "/home/hnes/Masterarbeit/Tools/cppstats/";
 	private static String resultsPath = "/home/hnes/Masterarbeit/Results/";
 	private static String tempPath = "/home/hnes/Masterarbeit/Temp/";
-	private static String detectionPath = "/home/hnes/Masterarbeit/Repositories/openvpn/revisionsFull.csv";
-	private static String project = "openvpn";
+	private static String detectionPath = "/home/hnes/Masterarbeit/Repositories/busybox/revisionsFull.csv";
+	private static String project = "busybox";
 	
 	public static String modeStr = "";
 	public static String smellModeStr = "";
@@ -309,12 +309,14 @@ public class Program {
 	 * @param comDate
 	 */
 	public static void cppSkunk(String comDate){
+		long startTime = System.currentTimeMillis();
+		
 		String resultsDir = resultsPath + project + "/" + comDate;
 		String curDir = tempPath + project + "/" + comDate;
 		String smellFile = smellPath;
 		
 		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "cppSkunk.sh", resultsDir, curDir, smellFile);
-		pb.directory(new File("/home/hnes/Masterarbeit/Tools/"));
+		pb.directory(new File("src/"));
 		try {
 			Process p = pb.start();
 			
@@ -325,6 +327,9 @@ public class Program {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		long timeForCppSkunk = System.currentTimeMillis() - startTime;
+		System.out.println("Ausführung von SKUNK und cppstats dauerte: " + timeForCppSkunk + " ms");
 	}
 	
 	/**
@@ -338,7 +343,7 @@ public class Program {
 		String smellFile = smellPath;
 		
 		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "skunkProc.sh", resultsDir, curDir, smellFile);
-		pb.directory(new File("/home/hnes/Masterarbeit/Tools/"));
+		pb.directory(new File("src/"));
 		try {
 			Process p = pb.start();
 			
@@ -361,7 +366,7 @@ public class Program {
 		String curHash = hash;
 		
 		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "gitScript.sh", repoDir, curHash);
-		 pb.directory(new File("/home/hnes/Masterarbeit/Tools/"));
+		 pb.directory(new File("src/"));
 		 try {
 			Process p = pb.start();
 			

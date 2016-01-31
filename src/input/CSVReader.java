@@ -72,7 +72,7 @@ public class CSVReader {
 				ChangedFile chFile = new ChangedFile(fileName, curHash, comDate);
 				
 				changedFiles.put(chFile, fileName);
-				if(((bugfixCount % 50) == 0) && bugfixCommit)
+				if(((bugfixCount % 100) == 0) && bugfixCommit)			// TODO: geändert auf 100 für Testzwecke
 					bugHashes.put(comDate, curHash);
 			}
 
