@@ -28,8 +28,8 @@ public class Program {
 	private static String cppstatsPath = "/home/hnes/Masterarbeit/Tools/cppstats/";
 	private static String resultsPath = "/home/hnes/Masterarbeit/Results/";
 	private static String tempPath = "/home/hnes/Masterarbeit/Temp/";
-	private static String detectionPath = "/home/hnes/Masterarbeit/Repositories/busybox/revisionsFull.csv";
-	private static String project = "busybox";
+	private static String detectionPath = "/home/hnes/Masterarbeit/Repositories/emacs/revisionsFull.csv";
+	private static String project = "emacs";
 	
 	public static String modeStr = "";
 	public static String smellModeStr = "";
